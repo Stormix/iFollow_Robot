@@ -1,0 +1,182 @@
+<!DOCTYPE html>
+<html>
+    <head>
+        <meta charset="utf-8">
+        <meta charset="utf-8">
+        <meta http-equiv="X-UA-Compatible" content="IE=edge">
+        <meta name="viewport" content="width=device-width, initial-scale=1">
+        <title>iFollow - Dashboard</title>
+        <!-- Bootstrap -->
+        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
+        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+        <link rel="stylesheet" href="../static/fonts/font-awesome/css/font-awesome.min.css">
+        <link rel="stylesheet" href="../static/css/custom.css">
+    </head>
+    <body>
+        <!-- Static navbar -->
+        <nav class="navbar navbar-default navbar-static-top">
+            <div class="container">
+                <div class="navbar-header">
+                    <a class="navbar-brand" href="#">iFollow</a>
+                </div>
+            </div>
+        </nav>
+        <div class="container">
+            <h1><i class="fa fa-tachometer" aria-hidden="true"></i> Interface de commande :</h1>
+            <div class="jumbotron">
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <p>Démarrer/Arrêter</p>
+                                    <br>
+                                    <input type="checkbox" id="power" name="power" unchecked/>
+                                    <label for="power" class="power">
+                                    <span class="icon-off"></span>
+                                    <span class="light"></span>
+                                    </label>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="panel panel-default">
+                            <div class="panel-body">
+                                <p>État des composants :</p>
+                                <hr>
+                                <!-- Table -->
+                                <table class="table table-bordered">
+                                    <tbody>
+                                        <tr>
+                                            <td>Moteur 1</td>
+                                            <td id="etat_M1"><span class="text-success">Marche</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Moteur 2</td>
+                                            <td id="etat_M2"><span class="text-danger">Arrêt</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ultrason 1</td>
+                                            <td id="etat_Ult1"><span class="text-success">Marche</span></td>
+                                        </tr>
+                                        <tr>
+                                            <td>Ultrason 2</td>
+                                            <td id="etat_Ult2"><span class="text-success">Marche</span></td>
+                                        </tr>
+                                    </tbody>
+                                </table>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h2>
+                                    <span id="distance_mes_gauche">50</span> <b>cm</b></h1>
+                                    <h4>Distance gauche</h4>
+                                    <h2>
+                                    <span id="distance_mes_droit">50</span> <b>cm</b></h1>
+                                    <h4>Distance droite</h4>
+                                    <hr>
+                                    <h4>Distance consigne : <span id="distance_consigne">50</span> <b>cm</b></h4>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Distance en cm">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-info" type="button">Modifer</button>
+                                        </span>
+                                    </div>
+                                    <!-- /input-group -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-md-4 text-center">
+                        <h4>
+                        Vitesse Moteur Gauche : <span class="label label-primary" id="vitesse_lineaire_gauche">20 tr/min</span></h3>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <h4>
+                        Vitesse Moteur Droit : <span class="label label-primary" id="vitesse_lineaire_droit">20 tr/min</span></h3>
+                    </div>
+                    <div class="col-md-4 text-center">
+                        <div class="col-md-12">
+                            <div class="panel panel-default">
+                                <div class="panel-body">
+                                    <h2>
+                                    <span id="vitesse_mes_gauche">50</span> <b>tr/min</b></h1>
+                                    <h4>Vitesse Roue gauche</h4>
+                                    <h2>
+                                    <span id="vitesse_mes_droit">50</span> <b>tr/min</b></h1>
+                                    <h4>Vitesse Roue droite</h4>
+                                    <hr>
+                                    <h4>Vitesse consigne : <span id="vitesse_consigne">50</span> <b>tr/min</b></h4>
+                                    <div class="input-group">
+                                        <input type="text" class="form-control" placeholder="Vitesse en tr/min">
+                                        <span class="input-group-btn">
+                                        <button class="btn btn-info" type="button">Modifer</button>
+                                        </span>
+                                    </div>
+                                    <!-- /input-group -->
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <!-- /container -->
+        <footer class="footer">
+            <div class="container">
+                <p class="text-muted">Réalisé par <a href="#">Anas Mazouni</a> & <a href="#">Ismail Ouadrhiri</a>. </p>
+            </div>
+        </footer>
+        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+        <script src="../static/js/jquery.min.js"></script>
+        <!-- Include all compiled plugins (below), or include individual files as needed -->
+        <script src="../static/js/bootstrap.min.js"></script>
+        <script>
+            $(document).ready(function() {
+                $(".GaugeMeter").gaugeMeter();
+            });
+            function returnStatus(etat){
+                if(etat == 1){
+                    return '<span class="text-success">Marche</span>';
+                }else{
+                    return '<span class="text-danger">Arrêt</span>';
+                }
+            }
+            var getData = function request(){
+                $.ajax({
+                    url: "/data",
+                    type: "GET",
+                    data: {},
+                    dataType: "json",
+                    success: function (data) {
+                        //Update power button
+                        document.getElementById("power").checked = (data.etat != 1);
+                        document.getElementById('etat_M1').innerHTML = returnStatus(data.etat_M1);
+                        document.getElementById('etat_M2').innerHTML = returnStatus(data.etat_M2);
+                        document.getElementById('etat_Ult1').innerHTML = returnStatus(data.etat_Ult1);
+                        document.getElementById('etat_Ult2').innerHTML = returnStatus(data.etat_Ult2);
+                        document.getElementById('distance_mes_gauche').innerHTML = data.distance_mes_gauche;
+                        document.getElementById('distance_mes_droit').innerHTML = data.distance_mes_droit;
+                        document.getElementById('vitesse_mes_gauche').innerHTML = data.vitesse_mes_gauche;
+                        document.getElementById('vitesse_mes_droit').innerHTML = data.vitesse_mes_droit;
+                        document.getElementById('vitesse_consigne').innerHTML = data.vitesse_consigne;
+                        document.getElementById('distance_consigne').innerHTML = data.distance_consigne;
+                        document.getElementById('vitesse_lineaire_gauche').innerHTML = data.vitesse_lineaire_gauche +" m/s";
+                        document.getElementById('vitesse_lineaire_droit').innerHTML = data.vitesse_lineaire_droit +" m/s";
+                    },
+                    error: function (data) {
+                        // console.log("Erreur!");
+                    }
+                });
+            }
+            setInterval(getData, 1000);
+        </script>
+    </body>
+</html>
