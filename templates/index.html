@@ -1,130 +1,130 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>iFollow - Dashboard</title>
-        <!-- Bootstrap -->
-        <link href="../static/css/bootstrap.min.css" rel="stylesheet">
-        <link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
-        <link rel="stylesheet" href="../static/fonts/font-awesome/css/font-awesome.min.css">
-        <link rel="stylesheet" href="../static/css/custom.css">
-    </head>
-    <body>
-        <!-- Static navbar -->
-        <nav class="navbar navbar-default navbar-static-top">
-            <div class="container">
-                <div class="navbar-header">
-                    <a class="navbar-brand" href="#">iFollow</a>
-                </div>
-            </div>
-        </nav>
-        <div class="container">
-            <h1><i class="fa fa-tachometer" aria-hidden="true"></i> Interface de commande :</h1>
-            <div class="jumbotron">
-                <div class="row">
-                    <div class="col-md-4 text-center">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <p>Démarrer/Arrêter</p>
-                                    <br>
-                                    <input type="checkbox" id="power" name="power" unchecked/>
-                                    <label for="power" class="power">
+
+<head>
+	<meta charset="utf-8">
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>iFollow - Dashboard</title>
+	<!-- Bootstrap -->
+	<link href="../static/css/bootstrap.min.css" rel="stylesheet">
+	<link href="https://fonts.googleapis.com/css?family=Roboto" rel="stylesheet">
+	<link rel="stylesheet" href="../static/fonts/font-awesome/css/font-awesome.min.css">
+	<link rel="stylesheet" href="../static/css/custom.css">
+</head>
+
+<body>
+	<!-- Static navbar -->
+	<nav class="navbar navbar-default navbar-static-top">
+		<div class="container">
+			<div class="navbar-header">
+				<a class="navbar-brand" href="#">iFollow</a>
+			</div>
+		</div>
+	</nav>
+	<div class="container">
+		<h1><i class="fa fa-tachometer" aria-hidden="true"></i> Interface de commande :</h1>
+		<div class="jumbotron">
+			<div class="row">
+				<div class="col-md-4 text-center">
+						<div class="panel panel-default">
+							<div class="panel-body" style="padding-bottom: 50px;">
+								<p>Démarrer/Arrêter</p>
+								<br>
+								<input type="checkbox" id="power" name="power" unchecked/>
+								<label for="power" class="power">
                                     <span class="icon-off"></span>
                                     <span class="light"></span>
                                     </label>
-                                </div>
-                            </div>
+							</div>
+
+					</div>
+				</div>
+				<div class="col-md-4 text-center">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<h3><span id="distance_mes">50</span> <b>cm</b></h3>
+								<h4>Distance mesurée</h4>
+								<hr>
+								<h3><span id="distance_consigne">50</span> <b>cm</b></h3>
+								<h4>Distance consigne : </h4>
+                                <hr>
+								<div class="input-group">
+									<input type="text" class="form-control" placeholder="Distance en cm">
+									<span class="input-group-btn">
+                                        <button class="btn btn-info" type="button">Modifer</button>
+                                        </span>
+								</div>
+								<!-- /input-group -->
+							</div>
+					</div>
+				</div>
+                <div class="col-md-4 text-center">
+						<div class="panel panel-default">
+							<div class="panel-body">
+								<h1><span id="">0</span><b>°</b></h1>
+								<h3>Angle du servo moteur</h3>
+                                <hr>
+                                <div class="input-group">
+									<input type="text" class="form-control" placeholder="Modifie l'angle en degré">
+									<span class="input-group-btn">
+                                        <button class="btn btn-info" type="button">Modifer</button>
+                                        </span>
+								</div>
+                        	</div>
+
                         </div>
-                    </div>
-                    <div class="col-md-4 text-center">
+
+				</div>
+
+			</div>
+			<div class="row">
+                <div class="col-md-4 text-center">
+
                         <div class="panel panel-default">
                             <div class="panel-body">
-                                <p>État des composants :</p>
-                                <hr>
-                                <!-- Table -->
-                                <table class="table table-bordered">
-                                    <tbody>
-                                        <tr>
-                                            <td>Moteur 1</td>
-                                            <td id="etat_M1"><span class="text-success">Marche</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Moteur 2</td>
-                                            <td id="etat_M2"><span class="text-danger">Arrêt</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ultrason 1</td>
-                                            <td id="etat_Ult1"><span class="text-success">Marche</span></td>
-                                        </tr>
-                                        <tr>
-                                            <td>Ultrason 2</td>
-                                            <td id="etat_Ult2"><span class="text-success">Marche</span></td>
-                                        </tr>
-                                    </tbody>
-                                </table>
+                                <h3><b>Obstacle</b></h3>
+                                <h4><span class="label label-danger" id="">Non Détecté</span></h4>
+                                <h3><span id="vitesse_mes_gauche">50</span> <b>tr/min</b></h3>
+                                <h4>Vitesse Moteur gauche</h4>
+                                <h3><span id="vitesse_mes_droit">50</span> <b>tr/min</b></h3>
+                                <h4>Vitesse Moteur droite</h4>
                             </div>
                         </div>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <h2>
-                                    <span id="distance_mes_gauche">50</span> <b>cm</b></h1>
-                                    <h4>Distance gauche</h4>
-                                    <h2>
-                                    <span id="distance_mes_droit">50</span> <b>cm</b></h1>
-                                    <h4>Distance droite</h4>
-                                    <hr>
-                                    <h4>Distance consigne : <span id="distance_consigne">50</span> <b>cm</b></h4>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Distance en cm">
-                                        <span class="input-group-btn">
-                                        <button class="btn btn-info" type="button">Modifer</button>
-                                        </span>
-                                    </div>
-                                    <!-- /input-group -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
                 </div>
-                <div class="row">
-                    <div class="col-md-4 text-center">
-                        <h4>
-                        Vitesse Moteur Gauche : <span class="label label-primary" id="vitesse_lineaire_gauche">20 tr/min</span></h3>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <h4>
-                        Vitesse Moteur Droit : <span class="label label-primary" id="vitesse_lineaire_droit">20 tr/min</span></h3>
-                    </div>
-                    <div class="col-md-4 text-center">
-                        <div class="col-md-12">
-                            <div class="panel panel-default">
-                                <div class="panel-body">
-                                    <h2>
-                                    <span id="vitesse_mes_gauche">50</span> <b>tr/min</b></h1>
-                                    <h4>Vitesse Roue gauche</h4>
-                                    <h2>
-                                    <span id="vitesse_mes_droit">50</span> <b>tr/min</b></h1>
-                                    <h4>Vitesse Roue droite</h4>
-                                    <hr>
-                                    <h4>Vitesse consigne : <span id="vitesse_consigne">50</span> <b>tr/min</b></h4>
-                                    <div class="input-group">
-                                        <input type="text" class="form-control" placeholder="Vitesse en tr/min">
-                                        <span class="input-group-btn">
-                                        <button class="btn btn-info" type="button">Modifer</button>
-                                        </span>
-                                    </div>
-                                    <!-- /input-group -->
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+				<div class="col-md-4 text-center">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h3>État des composants :</h3>
+							<!-- Table -->
+							<table class="table table-bordered">
+								<tbody>
+									<tr>
+										<td>Moteur 1</td>
+										<td id="etat_M1"><span class="text-success">Marche</span></td>
+									</tr>
+									<tr>
+										<td>Moteur 2</td>
+										<td id="etat_M2"><span class="text-danger">Arrêt</span></td>
+									</tr>
+									<tr>
+										<td>Ultrason 1</td>
+										<td id="etat_Ult1"><span class="text-success">Marche</span></td>
+									</tr>
+									<tr>
+										<td>Ultrason 2</td>
+										<td id="etat_Ult2"><span class="text-success">Marche</span></td>
+									</tr>
+								</tbody>
+							</table>
+						</div>
+					</div>
+				</div>
+
+				<div class="col-md-4 text-center">
+
+                </div>
                 </div>
             </div>
         </div>

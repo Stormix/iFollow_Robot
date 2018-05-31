@@ -1,0 +1,24 @@
+
+    def uselessFunctionKeptForSourceCode(self, x):
+        #TODO COMPARE THIS TO THE ONE BELOW
+        centerCoordinates = (self.cameraWidth / 2, self.cameraHeight / 2)
+        centerXCoordinate = centerCoordinates[0]
+        servoMaxAngle = self.servoMotor.maxAngle
+        servoCurrentAngle = self.servoMotor.lastAngle
+        Step = self.Step
+        setAngle = servoCurrentAngle
+
+        if (x < centerXCoordinate):
+            setAngle += Step
+            if setAngle > servoMaxAngle:
+                setAngle = servoMaxAngle
+            print("Rotating to : {} degree, Last angle was : {} degree, Step Angle : {} degree".format(
+                setAngle, servoCurrentAngle, Step))
+            self.servoMotor.setServoAngle(setAngle)
+        if (x > centerXCoordinate):
+            setAngle -= Step
+            if setAngle < 0:
+                setAngle = 0  # Minimum possible angle is 0 degree
+            print("Rotating to : {} degree, Last angle was : {} degree, Step Angle : {} degree".format(
+                setAngle, servoCurrentAngle, Step))
+            self.servoMotor.setServoAngle(setAngle)

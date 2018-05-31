@@ -2,6 +2,7 @@
     I/O setup module
     >_ sets up each input & output of the raspberry pi
 """
+#
 import RPi.GPIO as GPIO
 
 # Setup the raspberry pi GPIO
@@ -11,13 +12,13 @@ GPIO.setwarnings(False)
 
 # Setup ultrasonic sensor
 
-TRIG1 = 10
-ECHO1 = 11
+TRIG1 = 03
+ECHO1 = 04
 
-TRIG2 = 10
-ECHO2 = 11
+TRIG2 = 18
+ECHO2 = 17
 
-SERVO = 17
+SERVO = 02
 
 # LEFT MOTOR
 MOTOR_L_X = 10
