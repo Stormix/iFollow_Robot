@@ -32,7 +32,7 @@ class distanceSensor:
         # https://fr.wikipedia.org/wiki/Vitesse_du_son
         SoundSpeed = (331.5 + 0.607 * temperature)
         #print("Sound speed at {} degrees is : {}".format(SoundSpeed,temperature))
-        return SoundSpeed, temperature
+        return SoundSpeed
 
     def mesureDistance(self, MesureTemp=False):
         """
@@ -53,8 +53,8 @@ class distanceSensor:
         Time = (end - start) / 2
         Velocity = 340 if not MesureTemp else self.getSoundSpeed()  # a 20 deg celsius
         distance = round(float(Time * Velocity * 100), 2)
-        return distance, Time
+        return distance
 
     def isObstacleDetected(self):
         distance = self.mesureDistance()
-        return distance <= detectionDistance
+        return distance <= self.detectionDistance

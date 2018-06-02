@@ -1,13 +1,15 @@
 from servoMotor import servoMotor
 import RPi.GPIO as GPIO
-
+from UltrasonicSensor import distanceSensor
+import IOSetup as IO
+from time import sleep
 # Setup the raspberry pi GPIO
 
-GPIO.setmode(GPIO.BCM)
-GPIO.setwarnings(False)
-Servo = servoMotor(0, 02)
+Servo = servoMotor(0, 17)
 print(Servo)
+
+# val = 0
+# direction = 1
 while True:
-    angle = int(input("Angle : "))
-    Servo.setServoAngle(angle+30)
-    print(Servo)
+    angle = int(input("Angle: "))
+    Servo.setServoAngle(angle)

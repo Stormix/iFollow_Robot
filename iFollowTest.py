@@ -1,4 +1,5 @@
 from iFollow import iFollow
 
 iFollowRobot = iFollow()
-print(iFollowRobot)
+while True:
+    iFollowRobot.trackPerson()

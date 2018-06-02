@@ -3,13 +3,14 @@
 
 # USAGE: You need to specify a filter and "only one" image source
 #
-# (python) range-detector --filter RGB --image /path/to/image.png
-# or
 # (python) range-detector.py --filter HSV --webcam
+from picamera.array import PiRGBArray
+from picamera import PiCamera
 
 import cv2
 import argparse
 from operator import xor
+import imutils
 
 
 def callback(value):
@@ -72,31 +73,36 @@ def main():
         else:
             frame_to_thresh = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
     else:
-        camera = cv2.VideoCapture(0)
+        # initialize the camera and grab a reference to the raw camera capture
+        camera = PiCamera()
+        rawCapture = PiRGBArray(camera)
+        # keep looping
 
     setup_trackbars(range_filter)
 
-    while True:
+    for piFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
         if args['webcam']:
-            ret, image = camera.read()
-
-            if not ret:
-                break
+            rawCapture.truncate(0)
+            rawCapture.seek(0)
+            image = piFrame.array
+            image = imutils.resize(image, width=400)
 
             if range_filter == 'RGB':
                 frame_to_thresh = image.copy()
             else:
                 frame_to_thresh = cv2.cvtColor(image, cv2.COLOR_BGR2HSV)
 
-        v1_min, v2_min, v3_min, v1_max, v2_max, v3_max = get_trackbar_values(range_filter)
+        v1_min, v2_min, v3_min, v1_max, v2_max, v3_max = get_trackbar_values(
+            range_filter)
 
-        thresh = cv2.inRange(frame_to_thresh, (v1_min, v2_min, v3_min), (v1_max, v2_max, v3_max))
+        thresh = cv2.inRange(
+            frame_to_thresh, (v1_min, v2_min, v3_min), (v1_max, v2_max, v3_max))
 
         if args['preview']:
             preview = cv2.bitwise_and(image, image, mask=thresh)
             cv2.imshow("Preview", preview)
         else:
-            cv2.imshow("Original", image)
+            #cv2.imshow("Original", image)
             cv2.imshow("Thresh", thresh)
 
         if cv2.waitKey(1) & 0xFF is ord('q'):
