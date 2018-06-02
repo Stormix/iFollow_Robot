@@ -1,5 +1,5 @@
 from iFollow import iFollow
 
 iFollowRobot = iFollow()
-while True:
-    iFollowRobot.trackPerson()
+# print(iFollowRobot.UltrasonicSensors["ObstacleSensor"].mesureDistance())
+iFollowRobot.trackPerson()

@@ -16,8 +16,8 @@ from time import sleep
 try:
     buffer = 64
     # define the lower and upper boundaries of the object's Color in HSV Space
-    colorMin = (44, 70, 119)
-    colorMax = (199, 255, 255)
+    colorMin = (62, 196, 20)
+    colorMax = (107, 255, 255)
     pts = deque(maxlen=buffer)
     # if a video path was not supplied, grab the reference
     # to the webcam
@@ -63,7 +63,9 @@ try:
                     # then update the list of tracked points
                     cv2.circle(frame, (int(x), int(y)), int(radius),
                                (255, 255, 255), 2)
-                    cv2.circle(frame, center, 2, (0, 0, 255), -1)
+                    cv2.circle(frame, center, 2, (0, 255, 0), -1)
+                    print(x)
+
         except:
             center = None
 

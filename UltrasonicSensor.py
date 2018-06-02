@@ -39,7 +39,7 @@ class distanceSensor:
             Mesures the distance as detailed in the Datasheet
             return: float : distance in cm
         """
-        time.sleep(1)
+        # time.sleep(1)
         #print('La distance de mesure en progression')
         # on a besoin d'un pulsation de LARGEUR 10microseconde
         GPIO.output(self.TRIGGER_PIN, True)
@@ -56,5 +56,4 @@ class distanceSensor:
         return distance
 
     def isObstacleDetected(self):
-        distance = self.mesureDistance()
-        return distance <= self.detectionDistance
+        return self.mesureDistance() <= self.detectionDistance

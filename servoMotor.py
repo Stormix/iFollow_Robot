@@ -48,4 +48,4 @@ class servoMotor:
                                        self.maxAngle, self.LOW_LIM, self.HIGH_LIM))
             self.lastAngle = position
             ServoBlaster.servo_set(self.SERVO_PIN, str(pulse)+"us")
-            print("Set servo to : ", position, pulse)
+            #print("Set servo to : ", position, pulse)
