@@ -16,8 +16,8 @@ from time import sleep
 try:
     buffer = 64
     # define the lower and upper boundaries of the object's Color in HSV Space
-    colorMin = (62, 196, 20)
-    colorMax = (107, 255, 255)
+    colorMin = (98, 164, 0)
+    colorMax = (164, 255, 255)
     pts = deque(maxlen=buffer)
     # if a video path was not supplied, grab the reference
     # to the webcam
@@ -31,7 +31,7 @@ try:
         frame = piFrame.array
         # resize the frame, blur it, and convert it to the HSV
         # color space
-        frame = imutils.resize(frame, width=400)
+        frame = imutils.resize(frame, width=600)
         #blurred = cv2.GaussianBlur(frame, (11, 11), 0)
         hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
         lower_range = np.array(colorMin, dtype=np.uint8)

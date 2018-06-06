@@ -18,10 +18,10 @@ from servoMotor import servoMotor
 import IOSetup as IO
 from motor import DCMotor as Motor
 from time import sleep
+from Trackers import SingleColorTracker
+from Trackers import QRCode
 
 # import colorTracker
-from picamera.array import PiRGBArray
-from picamera import PiCamera
 from collections import deque
 import numpy as np
 import argparse
@@ -43,6 +43,7 @@ class iFollow:
 
         self.servoMotor = servoMotor(0, IO.SERVO)
         self.status = "Running"
+        self.password = "iFollow"
         # Camera resolution
         self.cameraWidth = 400
         # Servo Angle Steps
@@ -93,67 +94,41 @@ class iFollow:
                 """.format(self.status, distance, obstacle,  servoAngle,  motorL,  motorR)
 
     def trackPerson(self, tracker="color"):
-
         pid = PID(1, 0.4, 0.001)
         # Color tracker
         if tracker == "color":
             # define the lower and upper boundaries of the object's Color in HSV Space
-            colorMin = (62, 196, 20)
-            colorMax = (107, 255, 255)
-            # initialize the camera and grab a reference to the raw camera capture
-            camera = PiCamera()
-            rawCapture = PiRGBArray(camera)
-            # keep looping
-            for piFrame in camera.capture_continuous(rawCapture, format="bgr", use_video_port=True):
-                # clear the stream in preparation for the next frame
-                rawCapture.truncate(0)
-                # grab the raw NumPy array representing the image, then initialize the timestamp
-                # and occupied/unoccupied text
+            colorMin = (82, 93, 0)
+            colorMax = (255, 255, 209)
+            Tracker = SingleColorTracker.Tracker(
+                [colorMin, colorMax], self.cameraWidth)
+            for piFrame in Tracker.camera.capture_continuous(Tracker.rawCapture, format="bgr", use_video_port=True):
                 frame = piFrame.array
-                # resize the frame, blur it, and convert it to the HSV
-                # color space
-                frame = imutils.resize(frame, width=self.cameraWidth)
-                frame = cv2.flip(frame, 1)
-                # blurred = cv2.GaussianBlur(frame, (11, 11), 0)
-                hsv = cv2.cvtColor(frame, cv2.COLOR_BGR2HSV)
-                lower_range = np.array(colorMin, dtype=np.uint8)
-                upper_range = np.array(colorMax, dtype=np.uint8)
-                # construct a mask for the predefined color, then perform
-                # a series of dilations and erosions to remove any small
-                # blobs left in the mask
-                mask = cv2.inRange(hsv, lower_range, upper_range)
-                # mask = cv2.erode(mask, None, iterations=2)
-                # mask = cv2.dilate(mask, None, iterations=2)
-                # find contours in the mask and initialize the current
-                # (x, y) center of the ball
-                cnts = cv2.findContours(mask.copy(), cv2.RETR_EXTERNAL,
-                                        cv2.CHAIN_APPROX_SIMPLE)[-2]
-                center = None
-                try:
-                    # only proceed if at least one contour was found
-                    if len(cnts) > 0:
-                        # find the largest contour in the mask, then use
-                        # it to compute the minimum enclosing circle and
-                        # centroid
-                        c = max(cnts, key=cv2.contourArea)
-                        ((x, y), radius) = cv2.minEnclosingCircle(c)
-                        # only proceed if the radius meets a minimum size
-                        if radius > 2:
-                            M = cv2.moments(c)
-                            center = (int(M["m10"] / M["m00"]),
-                                      int(M["m01"] / M["m00"]))
-                            # only proceed if the radius meets a minimum size
-                            x = center[0] - self.cameraWidth / 2
-                        else:
-                            x = 0
-                    else:
-                        x = 0
-                except:
-                    print("error", "Unexpected error:", sys.exc_info()[0])
+                # try:
+                x = Tracker.getCoordinate(False, frame)
+                if x:
+                    x -= self.cameraWidth / 2
+                else:
                     x = 0
+                # except:
+                #    print(sys.exc_info())
+                #    x = 0
                 self.followDirection(x, pid)
-                # clear the stream in preparation for the next frame
-                rawCapture.truncate(0)
+                Tracker.rawCapture.truncate(0)
+        elif tracker == "QRCode":
+            Tracker = QRCode.Tracker(self.password, 400)
+            for piFrame in Tracker.camera.capture_continuous(Tracker.rawCapture, format="bgr", use_video_port=True):
+                frame = piFrame.array
+                x, y = Tracker.getCenter(frame)
+                if x:
+                    x -= self.cameraWidth / 2
+                else:
+                    x = 0
+                print(x)
+                self.followDirection(-x, pid)
+                Tracker.rawCapture.truncate(0)
+        else:
+            pass
 
     def detectObstacle(self):
         """
@@ -180,17 +155,19 @@ class iFollow:
                 self.servoMotor.setServoAngle(int(setAngle))
         elif method == "angle":
             # 22 pixel per centimeter
-            distance = 16 * self.cameraWidth  # self.mesureDistance() * 22
+            distance = 16 * self.cameraPixelCm  # self.mesureDistance() * 22
             objectAngle = math.atan(float(x)/float(distance))
-            objectAngle = math.degrees(objectAngle)
+            objectAngle = round(math.degrees(objectAngle), 2)
             # set point is 10 so
-            setAngle = - math.degrees(1.627)
-            setAngle += objectAngle + servoCurrentAngle
+            # setAngle = - math.degrees(1.627)
+            setAngle = objectAngle + servoCurrentAngle
             if setAngle > 90:
                 while setAngle > 90:
                     setAngle -= 1
-            print(servoCurrentAngle, setAngle, x)
+            print("Distance: "+str(objectAngle), "Current:"+str(servoCurrentAngle),
+                  "Setpoint: "+str(setAngle), x)
             self.servoMotor.setServoAngle(setAngle)
+            return setAngle
         else:
             # PID
             distance = 16 * 22  # 20pixel per centimeter
