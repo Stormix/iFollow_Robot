@@ -48,4 +48,4 @@ for dist in distances.keys():
     ax.fill_between(angleMesureRad, distance,
                     color=color, alpha=0.5)
 plt.legend()
-plt.savefig("Experiences/Ultrason/graphes/Angle.png")
+plt.savefig("graphes/Angle.png")

@@ -5,6 +5,7 @@
 import time
 import RPi.GPIO as GPIO
 import Adafruit_DHT
+import IOSetup as IO
 
 
 class distanceSensor:
@@ -18,7 +19,7 @@ class distanceSensor:
         self.TRIGGER_PIN = TRIGGER_PIN
         self.ECHO_PIN = ECHO_PIN
         self.detectionDistance = detectionDistance
-
+        self.TEMP_SENSOR = IO.TEMP_SENSOR
         GPIO.setup(self.TRIGGER_PIN, GPIO.OUT)
         GPIO.setup(self.ECHO_PIN, GPIO.IN)
         GPIO.output(self.TRIGGER_PIN, False)
@@ -28,7 +29,7 @@ class distanceSensor:
         return """ Ultrasonic Sensor {} mesuring {}""".format(self.ID, self.mesureDistance())
 
     def getSoundSpeed(self):
-        humidity, temperature = Adafruit_DHT.read_retry(11, 23)
+        humidity, temperature = Adafruit_DHT.read_retry(11, self.TEMP_SENSOR)
         # https://fr.wikipedia.org/wiki/Vitesse_du_son
         SoundSpeed = (331.5 + 0.607 * temperature)
         #print("Sound speed at {} degrees is : {}".format(SoundSpeed,temperature))

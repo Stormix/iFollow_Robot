@@ -24,75 +24,105 @@
 		</div>
 	</nav>
 	<div class="container">
-		<h1><i class="fa fa-tachometer" aria-hidden="true"></i> Interface de commande :</h1>
+		<h1>
+			<i class="fa fa-tachometer" aria-hidden="true"></i> Interface de commande :</h1>
 		<div class="jumbotron">
 			<div class="row">
 				<div class="col-md-4 text-center">
-						<div class="panel panel-default">
-							<div class="panel-body" style="padding-bottom: 50px;">
-								<p>Démarrer/Arrêter</p>
-								<br>
-								<input type="checkbox" id="power" name="power" unchecked/>
-								<label for="power" class="power">
-                                    <span class="icon-off"></span>
-                                    <span class="light"></span>
-                                    </label>
-							</div>
+					<div class="panel panel-default">
+						<div class="panel-body" style="padding-bottom: 50px;">
+							<p>Démarrer/Arrêter</p>
+							<br>
+							<input type="checkbox" id="power" name="power" unchecked/>
+							<label for="power" class="power">
+								<span class="icon-off"></span>
+								<span class="light"></span>
+							</label>
+						</div>
 
 					</div>
 				</div>
 				<div class="col-md-4 text-center">
-						<div class="panel panel-default">
-							<div class="panel-body">
-								<h3><span id="distance_mes">50</span> <b>cm</b></h3>
-								<h4>Distance mesurée</h4>
-								<hr>
-								<h3><span id="distance_consigne">50</span> <b>cm</b></h3>
-								<h4>Distance consigne : </h4>
-                                <hr>
-								<div class="input-group">
-									<input type="text" class="form-control" placeholder="Distance en cm">
-									<span class="input-group-btn">
-                                        <button class="btn btn-info" type="button">Modifer</button>
-                                        </span>
-								</div>
-								<!-- /input-group -->
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h3>
+								<span id="distance_mes">50</span>
+								<b>cm</b>
+							</h3>
+							<h4>Distance mesurée</h4>
+							<hr>
+							<h3>
+								<span id="distance_consigne">50</span>
+								<b>cm</b>
+							</h3>
+							<h4>Distance consigne : </h4>
+							<hr>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Distance en cm">
+								<span class="input-group-btn">
+									<button class="btn btn-info" type="button">Modifer</button>
+								</span>
 							</div>
+							<!-- /input-group -->
+						</div>
 					</div>
 				</div>
-                <div class="col-md-4 text-center">
-						<div class="panel panel-default">
-							<div class="panel-body">
-								<h1><span id="">0</span><b>°</b></h1>
-								<h3>Angle du servo moteur</h3>
-                                <hr>
-                                <div class="input-group">
-									<input type="text" class="form-control" placeholder="Modifie l'angle en degré">
-									<span class="input-group-btn">
-                                        <button class="btn btn-info" type="button">Modifer</button>
-                                        </span>
-								</div>
-                        	</div>
+				<div class="col-md-4 text-center">
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h1>
+								<span id="">15</span>
+								<b>°</b>
+							</h1>
+							<h3>Angle du servo moteur</h3>
+							<hr>
+							<div class="input-group">
+								<input type="text" class="form-control" placeholder="Modifie l'angle en degré">
+								<span class="input-group-btn">
+									<button class="btn btn-info" type="button">Modifer</button>
+								</span>
+							</div>
+						</div>
 
-                        </div>
+					</div>
 
 				</div>
 
 			</div>
 			<div class="row">
-                <div class="col-md-4 text-center">
+				<div class="col-md-4 text-center">
 
-                        <div class="panel panel-default">
-                            <div class="panel-body">
-                                <h3><b>Obstacle</b></h3>
-                                <h4><span class="label label-danger" id="">Non Détecté</span></h4>
-                                <h3><span id="vitesse_mes_gauche">50</span> <b>tr/min</b></h3>
-                                <h4>Vitesse Moteur gauche</h4>
-                                <h3><span id="vitesse_mes_droit">50</span> <b>tr/min</b></h3>
-                                <h4>Vitesse Moteur droite</h4>
-                            </div>
-                        </div>
-                </div>
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h3>
+								Personne
+								<b>suivie</b>
+							</h3>
+							<h4>
+								<span class="label label-danger" id="">Non Détecté</span>
+							</h4>
+						</div>
+					</div>
+				</div>
+				<div class="col-md-4 text-center">
+
+					<div class="panel panel-default">
+						<div class="panel-body">
+							<h3>
+								<span id="vitesse_mes_gauche">112.4</span>
+								<b>tr/min</b>
+							</h3>
+							<h4>Vitesse Moteur</h4>
+							<hr>
+							<h3>
+								<span id="vitesse_mes_gauche">0.4</span>
+								<b>m/s</b>
+							</h3>
+							<h4>Vitesse de déplacement</h4>
+
+						</div>
+					</div>
+				</div>
 				<div class="col-md-4 text-center">
 					<div class="panel panel-default">
 						<div class="panel-body">
@@ -102,19 +132,27 @@
 								<tbody>
 									<tr>
 										<td>Moteur 1</td>
-										<td id="etat_M1"><span class="text-success">Marche</span></td>
+										<td id="etat_M1">
+											<span class="text-success">Marche</span>
+										</td>
 									</tr>
 									<tr>
 										<td>Moteur 2</td>
-										<td id="etat_M2"><span class="text-danger">Arrêt</span></td>
+										<td id="etat_M2">
+											<span class="text-success">Marche</span>
+										</td>
 									</tr>
 									<tr>
-										<td>Ultrason 1</td>
-										<td id="etat_Ult1"><span class="text-success">Marche</span></td>
+										<td>Servo Moteur</td>
+										<td id="etat_servo">
+											<span class="text-danger">Arrêt</span>
+										</td>
 									</tr>
 									<tr>
-										<td>Ultrason 2</td>
-										<td id="etat_Ult2"><span class="text-success">Marche</span></td>
+										<td>Capteur Ultrason</td>
+										<td id="etat_Ult1">
+											<span class="text-success">Marche</span>
+										</td>
 									</tr>
 								</tbody>
 							</table>
@@ -124,59 +162,63 @@
 
 				<div class="col-md-4 text-center">
 
-                </div>
-                </div>
-            </div>
-        </div>
-        <!-- /container -->
-        <footer class="footer">
-            <div class="container">
-                <p class="text-muted">Réalisé par <a href="#">Anas Mazouni</a> & <a href="#">Ismail Ouadrhiri</a>. </p>
-            </div>
-        </footer>
-        <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
-        <script src="../static/js/jquery.min.js"></script>
-        <!-- Include all compiled plugins (below), or include individual files as needed -->
-        <script src="../static/js/bootstrap.min.js"></script>
-        <script>
-            $(document).ready(function() {
-                $(".GaugeMeter").gaugeMeter();
-            });
-            function returnStatus(etat){
-                if(etat == 1){
-                    return '<span class="text-success">Marche</span>';
-                }else{
-                    return '<span class="text-danger">Arrêt</span>';
-                }
-            }
-            var getData = function request(){
-                $.ajax({
-                    url: "/data",
-                    type: "GET",
-                    data: {},
-                    dataType: "json",
-                    success: function (data) {
-                        //Update power button
-                        document.getElementById("power").checked = (data.etat != 1);
-                        document.getElementById('etat_M1').innerHTML = returnStatus(data.etat_M1);
-                        document.getElementById('etat_M2').innerHTML = returnStatus(data.etat_M2);
-                        document.getElementById('etat_Ult1').innerHTML = returnStatus(data.etat_Ult1);
-                        document.getElementById('etat_Ult2').innerHTML = returnStatus(data.etat_Ult2);
-                        document.getElementById('distance_mes_gauche').innerHTML = data.distance_mes_gauche;
-                        document.getElementById('distance_mes_droit').innerHTML = data.distance_mes_droit;
-                        document.getElementById('vitesse_mes_gauche').innerHTML = data.vitesse_mes_gauche;
-                        document.getElementById('vitesse_mes_droit').innerHTML = data.vitesse_mes_droit;
-                        document.getElementById('vitesse_consigne').innerHTML = data.vitesse_consigne;
-                        document.getElementById('distance_consigne').innerHTML = data.distance_consigne;
-                        document.getElementById('vitesse_lineaire_gauche').innerHTML = data.vitesse_lineaire_gauche +" m/s";
-                        document.getElementById('vitesse_lineaire_droit').innerHTML = data.vitesse_lineaire_droit +" m/s";
-                    },
-                    error: function (data) {
-                        // console.log("Erreur!");
-                    }
-                });
-            }
-            setInterval(getData, 1000);
-        </script>
-    </body>
+				</div>
+			</div>
+		</div>
+	</div>
+	<!-- /container -->
+	<footer class="footer">
+		<div class="container">
+			<p class="text-muted">Réalisé par
+				<a href="#">Anas Mazouni</a> &
+				<a href="#">Ismail Ouadrhiri</a>. </p>
+		</div>
+	</footer>
+	<!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+	<script src="../static/js/jquery.min.js"></script>
+	<!-- Include all compiled plugins (below), or include individual files as needed -->
+	<script src="../static/js/bootstrap.min.js"></script>
+	<script>
+		$(document).ready(function () {
+			$(".GaugeMeter").gaugeMeter();
+		});
+
+		function returnStatus(etat) {
+			if (etat == 1) {
+				return '<span class="text-success">Marche</span>';
+			} else {
+				return '<span class="text-danger">Arrêt</span>';
+			}
+		}
+		var getData = function request() {
+			$.ajax({
+				url: "/data",
+				type: "GET",
+				data: {},
+				dataType: "json",
+				success: function (data) {
+					//Update power button
+					document.getElementById("power").checked = (data.etat != 1);
+					document.getElementById('etat_M1').innerHTML = returnStatus(data.etat_M1);
+					document.getElementById('etat_M2').innerHTML = returnStatus(data.etat_M2);
+					document.getElementById('etat_Ult1').innerHTML = returnStatus(data.etat_Ult1);
+					document.getElementById('etat_Ult2').innerHTML = returnStatus(data.etat_Ult2);
+					document.getElementById('distance_mes_gauche').innerHTML = data.distance_mes_gauche;
+					document.getElementById('distance_mes_droit').innerHTML = data.distance_mes_droit;
+					document.getElementById('vitesse_mes_gauche').innerHTML = data.vitesse_mes_gauche;
+					document.getElementById('vitesse_mes_droit').innerHTML = data.vitesse_mes_droit;
+					document.getElementById('vitesse_consigne').innerHTML = data.vitesse_consigne;
+					document.getElementById('distance_consigne').innerHTML = data.distance_consigne;
+					document.getElementById('vitesse_lineaire_gauche').innerHTML = data.vitesse_lineaire_gauche + " m/s";
+					document.getElementById('vitesse_lineaire_droit').innerHTML = data.vitesse_lineaire_droit + " m/s";
+				},
+				error: function (data) {
+					// console.log("Erreur!");
+				}
+			});
+		}
+		setInterval(getData, 1000);
+	</script>
+</body>
+
 </html>

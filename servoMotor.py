@@ -16,14 +16,13 @@ class servoMotor:
     def __init__(self, ID, SERVO_PIN):
 
         # ServoBlaster is what we use to control the servo motors
-
-        self.SERVO_PIN = 11 if SERVO_PIN == 17 else 0  # Pin 17 is physical 11
+        GPIO.setmode(GPIO.BCM)
+        GPIO.setup(SERVO_PIN, GPIO.OUT)
+        self.SERVO_PIN = SERVO_PIN
         self.ID = ID
         self.lastAngle = 0
-        self.minAngle = -90
-        self.maxAngle = 90
-        self.HIGH_LIM = 2000
-        self.LOW_LIM = 1000
+        self.minAngle = 0
+        self.maxAngle = 180
 
     def __str__(self):
         return """ Servo Motor #{} at {} degrees """.format(self.ID, self.lastAngle)
@@ -36,16 +35,17 @@ class servoMotor:
     def customMap(self, x, in_min, in_max, out_min, out_max):
         return (x - in_min) * (out_max - out_min) / (in_max - in_min) + out_min
 
-    def setServoAngle(self, position):
+    def setServoAngle(self, angle):
         """
             Sets the servo angle
             params:
                 position : int : (-90,90)
         """
-        if position <= self.maxAngle and position >= self.minAngle:
-            # 1000us/2000us is normally the extremes and 1500us is centered.
-            pulse = int(self.customMap(position, self.minAngle,
-                                       self.maxAngle, self.LOW_LIM, self.HIGH_LIM))
-            self.lastAngle = position
-            ServoBlaster.servo_set(self.SERVO_PIN, str(pulse)+"us")
-            #print("Set servo to : ", position, pulse)
+        if angle <= self.maxAngle and angle >= self.minAngle:
+            servo = self.SERVO_PIN
+            pwm = GPIO.PWM(servo, 50)
+            pwm.start(8)
+            dutyCycle = angle / 18. + 3.
+            pwm.ChangeDutyCycle(dutyCycle)
+            sleep(0.3)
+            pwm.stop()

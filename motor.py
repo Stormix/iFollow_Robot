@@ -5,21 +5,22 @@
 
 import RPi.GPIO as GPIO
 
+
 class DCMotor:
     '''
         DC-Motor class
     '''
 
-    def __init__(self, ID, MOTOR_X, MOTOR_Y):
+    def __init__(self, ID, MOTOR_X, MOTOR_Y, ENABLE):
 
         GPIO.setup(MOTOR_X, GPIO.OUT)
         GPIO.setup(MOTOR_Y, GPIO.OUT)
+        GPIO.setup(ENABLE, GPIO.OUT)
+        self.MOTOR_X = MOTOR_X
+        self.MOTOR_Y = MOTOR_Y
+        self.motorPWM = GPIO.PWM(ENABLE, 50)
 
-        self.motorPWM_Forward = GPIO.PWM(MOTOR_X, 50)
-        self.motorPWM_Backward = GPIO.PWM(MOTOR_Y, 50)
-
-        self.motorPWM_Forward.start(0)
-        self.motorPWM_Backward.start(0)
+        self.motorPWM.start(0)
 
         self.status = "Stopped"
 
@@ -29,18 +30,36 @@ class DCMotor:
     def mesureSpeed(self):
         pass
 
-    def moveForward(self, speed = 50):
+    def moveForward(self, speed=50):
 
         self.status = "Forward"
-        self.motorPWM_Forward.ChangeDutyCycle(speed)
 
-    def moveBackward(self, speed = 50):
+        GPIO.output(self.MOTOR_X, True)
+        GPIO.output(self.MOTOR_Y, False)
+
+        self.motorPWM.ChangeDutyCycle(speed)
+
+    def moveBackward(self, speed=50):
 
         self.status = "Backward"
-        self.motorPWM_Backward.ChangeDutyCycle(speed)
+        GPIO.output(self.MOTOR_X, False)
+        GPIO.output(self.MOTOR_Y, True)
+
+        self.motorPWM.ChangeDutyCycle(speed)
+
+    def move(self, speed=50):
+        if speed > 0:
+            self.status = "Forward"
+            GPIO.output(self.MOTOR_X, True)
+            GPIO.output(self.MOTOR_Y, False)
+        else:
+            self.status = "Backward"
+            GPIO.output(self.MOTOR_X, False)
+            GPIO.output(self.MOTOR_Y, True)
+        print(self.status)
+        self.motorPWM.ChangeDutyCycle(abs(speed))
 
     def stop(self):
 
         self.status = "Stopped"
-        self.motorPWM_Forward.ChangeDutyCycle(0)
-        self.motorPWM_Backward.ChangeDutyCycle(0)
+        self.motorPWM.ChangeDutyCycle(0)
