@@ -40,8 +40,7 @@ class distanceSensor:
             Mesures the distance as detailed in the Datasheet
             return: float : distance in cm
         """
-        # time.sleep(1)
-        #print('La distance de mesure en progression')
+        #print('Mesure de distance en progression')
         # on a besoin d'un pulsation de LARGEUR 10microseconde
         GPIO.output(self.TRIGGER_PIN, True)
         time.sleep(0.000001)

@@ -53,12 +53,9 @@ class iFollow:
         # Obstacle detection distance limit, an Obstacle will be considered
         # detected if the separating distance is less than it.
         self.detectionDistance = 3
-        self.TrackerSetPoint = 10
+        self.TrackerSetPoint = 0
         self.cameraPixelCm = 22
-        self.UltrasonicSensors = {
-            "DistanceSensor": distanceSensor("Distance", IO.TRIG1, IO.ECHO1),
-            "ObstacleSensor": distanceSensor("Obstacle", IO.TRIG2, IO.ECHO2, self.detectionDistance)
-        }
+        self.distanceSensor = distanceSensor("Distance", IO.TRIG, IO.ECHO)
         self.Motors = {
             "LEFT": Motor("LEFT", IO.MOTOR_L_X, IO.MOTOR_L_X),
             "RIGHT": Motor("RIGHT", IO.MOTOR_R_X, IO.MOTOR_R_X)
@@ -68,7 +65,7 @@ class iFollow:
         '''
             Object Representation
         '''
-        distance = 10  # self.UltrasonicSensors["DistanceSensor"].mesureDistance()
+        distance = self.distanceSensor.mesureDistance()
         obstacle = self.detectObstacle()
         motorL = self.Motors["LEFT"].status
         motorR = self.Motors["RIGHT"].status
@@ -84,7 +81,7 @@ class iFollow:
                         > Status : {}
                         > Sensors :
                                 Distance Sensor : {} cm
-                                Obstacle Sensor : {}
+                                Obstacle Detected : {}
                         > Servo Angle : {} degree
                         > Camera :
                                 Object (not) detected
@@ -104,19 +101,15 @@ class iFollow:
                 [colorMin, colorMax], self.cameraWidth)
             for piFrame in Tracker.camera.capture_continuous(Tracker.rawCapture, format="bgr", use_video_port=True):
                 frame = piFrame.array
-                # try:
                 x = Tracker.getCoordinate(False, frame)
                 if x:
                     x -= self.cameraWidth / 2
                 else:
                     x = 0
-                # except:
-                #    print(sys.exc_info())
-                #    x = 0
                 self.followDirection(x, pid)
                 Tracker.rawCapture.truncate(0)
         elif tracker == "QRCode":
-            Tracker = QRCode.Tracker(self.password, 400)
+            Tracker = QRCode.Tracker(self.password, self.cameraWidth)
             for piFrame in Tracker.camera.capture_continuous(Tracker.rawCapture, format="bgr", use_video_port=True):
                 frame = piFrame.array
                 x, y = Tracker.getCenter(frame)
@@ -132,9 +125,9 @@ class iFollow:
 
     def detectObstacle(self):
         """
-            We're using a the seconds sensor to detect obstacles
+            To detect obstacles
         """
-        return self.UltrasonicSensors["ObstacleSensor"].isObstacleDetected()
+        return self.distanceSensor.isObstacleDetected()
 
     # Get tracked object center coordinates
     def followDirection(self, x, pid, method="angle"):
@@ -155,22 +148,21 @@ class iFollow:
                 self.servoMotor.setServoAngle(int(setAngle))
         elif method == "angle":
             # 22 pixel per centimeter
-            distance = 16 * self.cameraPixelCm  # self.mesureDistance() * 22
+            distance = self.distanceSensor.mesureDistance() * self.cameraPixelCm
             objectAngle = math.atan(float(x)/float(distance))
             objectAngle = round(math.degrees(objectAngle), 2)
-            # set point is 10 so
-            # setAngle = - math.degrees(1.627)
             setAngle = objectAngle + servoCurrentAngle
             if setAngle > 90:
                 while setAngle > 90:
                     setAngle -= 1
-            print("Distance: "+str(objectAngle), "Current:"+str(servoCurrentAngle),
-                  "Setpoint: "+str(setAngle), x)
+            print("Distance: "+str(objectAngle), "Current:" +
+                  str(servoCurrentAngle), "Setpoint: "+str(setAngle), x)
             self.servoMotor.setServoAngle(setAngle)
             return setAngle
         else:
             # PID
-            distance = 16 * 22  # 20pixel per centimeter
+            distance = self.distanceSensor.mesureDistance(
+            ) * self.cameraPixelCm  # 20pixel per centimeter
             pid.SetPoint = 0
             pid.setSampleTime(0.0)
             pid.update(x)
@@ -188,7 +180,6 @@ class iFollow:
         self.runInParallel(self.trackPerson, self.keepDistance)
 
     def mesureDistance(self):
-        #
         output = subprocess.Popen(["python", "ultrasonTest.py"],
                                   stdout=subprocess.PIPE).communicate()[0]
         return float(output)

@@ -101,3 +101,6 @@ ENV/
 .mypy_cache/
 
 iFollow
+*.jpg
+*.png
+__pycache__
